@@ -48,6 +48,7 @@ form.addEventListener("submit", async (e) => {
     if (json.success) {
       form.reset();
       successMessage.classList.remove("hidden");
+      window.location.href = "https://sagovee.github.io/Mo-VeeWedding/Thank-you.html";
     } else {
       errorMessage.textContent = "Error: " + (json.message || "Try again");
       errorMessage.classList.remove("hidden");
