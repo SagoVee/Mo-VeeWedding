@@ -21,26 +21,40 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
+
+// RSVP form setup
+const form = document.getElementById("rsvp-form");
+const submitButton = document.getElementById("rsvp-submit");
+const errorMessage = document.getElementById("form-error");
+const successMessage = document.getElementById("form-success");
+
+// Replace with your actual SplitForm access key
+const SPLITFORM_KEY = "c48273f0b54447aeaf7e2761ecd812c2";
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
   errorMessage.classList.add("hidden");
   successMessage.classList.add("hidden");
   submitButton.disabled = true;
 
   try {
-    const formData = new FormData(form);
+    const data = new FormData(form);
+    data.set("access_key", SPLITFORM_KEY);
+    data.set("subject", "New RSVP submission");
 
-    const response = await fetch("https://formcarry.com/s/PpHcw0PU6qD", {
+    const res = await fetch("https://splitforms.com/api/submit", {
       method: "POST",
-      body: formData
+      body: data,
+      headers: { Accept: "application/json" },
     });
 
-    if (response.ok) {
+    const json = await res.json();
+    if (json.success) {
       form.reset();
       successMessage.classList.remove("hidden");
     } else {
-      errorMessage.textContent = "Your RSVP could not be submitted. Please try again.";
+      errorMessage.textContent = "Error: " + (json.message || "Try again");
       errorMessage.classList.remove("hidden");
     }
   } catch (err) {
