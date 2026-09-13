@@ -20,54 +20,90 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
-});
-// RSVP Form Handling
-async function submitForm(event) {
-    event.preventDefault(); // Prevent default form submission
 
-    // Get form values (matching PHP field names)
-    const guestName  = document.getElementById('guest-name').value.trim();
-    const attendance = document.getElementById('attendance').value.trim();
-    const dietary    = document.getElementById('dietary-notes')?.value.trim() || "";
-    const song       = document.getElementById('song-request')?.value.trim() || "";
-    const message    = document.getElementById('Comments').value.trim();
-    const email      = document.getElementById('email')?.value.trim() || "";
-    const mobile     = document.getElementById('phone')?.value.trim() || "";
+  // RSVP form
+  const form = document.getElementById("rsvp-form");
+  const submitButton = document.getElementById("rsvp-submit");
+  const errorMessage = document.getElementById("form-error");
+  const successMessage = document.getElementById("form-success");
+  let currentRecordCount = 0;
+  let sheetReady = false;
 
-    // Basic validation
-    if (!guestName || !attendance) {
-        alert("Please fill in your name and attendance choice.");
+  const dataHandler = {
+    onDataChanged(data) {
+      currentRecordCount = data.length;
+    }
+  };
+
+  async function initializeSheet() {
+    const result = await window.dataSdk.init(dataHandler);
+    if (result.isOk) {
+      sheetReady = true;
+    } else if (errorMessage) {
+      errorMessage.textContent = "We could not connect to the RSVP sheet. Please try again shortly.";
+      errorMessage.classList.remove("hidden");
+    }
+  }
+
+  if (form) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (errorMessage) errorMessage.classList.add("hidden");
+      if (successMessage) successMessage.classList.add("hidden");
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
         return;
-    }
+      }
 
-    // Build form data with PHP field names
-    const formData = new FormData();
-    formData.append("guest-name", guestName);
-    formData.append("attendance", attendance);
-    formData.append("dietary-notes", dietary);
-    formData.append("song-request", song);
-    formData.append("message", message);
-    formData.append("email", email);
-    formData.append("mobile", mobile);
+      if (!sheetReady) {
+        if (errorMessage) {
+          errorMessage.textContent = "The RSVP form is still getting ready. Please try again in a moment.";
+          errorMessage.classList.remove("hidden");
+        }
+        return;
+      }
 
-    try {
-        const response = await fetch("rsvp.php", {
-            method: "POST",
-            body: formData
-        });
+      if (currentRecordCount >= 999) {
+        if (errorMessage) {
+          errorMessage.textContent = "The RSVP list is currently full. Please contact the couple directly.";
+          errorMessage.classList.remove("hidden");
+        }
+        return;
+      }
 
-        const result = await response.text();
-        // Show feedback
-        document.getElementById("form-success").textContent = result;
-        document.getElementById("form-success").classList.remove("hidden");
-        document.getElementById("form-error").classList.add("hidden");
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.classList.add("opacity-60", "cursor-wait");
+      }
 
-        // Reset form
-        document.getElementById("rsvp-form").reset();
-    } catch (error) {
-        console.error("Submission failed:", error);
-        document.getElementById("form-error").textContent = "Error submitting form. Please try again.";
-        document.getElementById("form-error").classList.remove("hidden");
-        document.getElementById("form-success").classList.add("hidden");
-    }
-}
+      const response = await window.dataSdk.create({
+        guest_name: document.getElementById("guest-name")?.value.trim(),
+        attendance: document.getElementById("attendance")?.value,
+        guest_count: Number(document.getElementById("guest-count")?.value),
+        dietary_notes: document.getElementById("dietary-notes")?.value.trim(),
+        message: document.getElementById("message")?.value.trim(),
+        submitted_at: new Date().toISOString()
+      });
+
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.classList.remove("opacity-60", "cursor-wait");
+      }
+
+      if (response.isOk) {
+        form.reset();
+        if (successMessage) successMessage.classList.remove("hidden");
+      } else if (errorMessage) {
+        errorMessage.textContent = "Your RSVP could not be submitted. Please try again.";
+        errorMessage.classList.remove("hidden");
+      }
+    });
+  }
+
+  // Initialize icons and sheet
+  if (typeof lucide !== "undefined") {
+    lucide.createIcons();
+  }
+  initializeSheet();
+});

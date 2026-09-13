@@ -1,50 +1,4 @@
-<?php
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Collect and sanitize form values
-    $guest_name   = htmlspecialchars($_POST["guest-name"] ?? "");
-    $attendance   = htmlspecialchars($_POST["attendance"] ?? "");
-    $dietary      = htmlspecialchars($_POST["dietary-notes"] ?? "");
-    $song_request = htmlspecialchars($_POST["song-request"] ?? "");
-    $message      = htmlspecialchars($_POST["message"] ?? "");
-    $email        = htmlspecialchars($_POST["email"] ?? "");
-    $mobile       = htmlspecialchars($_POST["mobile"] ?? "");
-
-    // Recipient email
-    $to = "sagovee@outlook.com";
-    $subject = "New RSVP Submission from $guest_name";
-
-    // Email headers (safe defaults)
-    $headers  = "From: sagovee@outlook.com\r\n";
-    if (!empty($email)) {
-        $headers .= "Reply-To: $email\r\n";
-    }
-    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-
-    // Email body
-    $body = "You have received a new message from the DecodeIT contact form:\n\n";
-    $body .= "--------------------------------------------\n";
-    $body  = "Name: $guest_name\n";
-    $body .= "Attendance: $attendance\n";
-    $body .= "Dietary Notes: $dietary\n";
-    $body .= "Song Request: $song_request\n";
-    $body .= "Message: $message\n";
-    $body .= "Mobile: $mobile\n";
-    $body .= "Email: $email\n";
-    $body .= "--------------------------------------------\n";
-    $body .= "Submitted At: " . date("Y-m-d H:i:s") . "\n";
-
-    // Send the email
-    if (mail($to, $subject, $body, $headers)) {
-        echo "Thank you — your RSVP has been received!";
-    } else {
-        echo "Error submitting form. Please try again later.";
-    }
-} else {
-    echo "Invalid request method.";
-}
-?>
-
-
+@ -0,0 +1,545 @@
 <!doctype html>
 <html lang="en"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260907-05-0068bad","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/9e99ecf74af2a081.telemetry_sdk.js" integrity="sha512-tZ7fmfTx2KpCLjXQnEuL9azQ4A5+7+xumsx6r/WYVD0zCP/8LP8hDeCypMQesmP+WyAew4g7l5Ah23Bjd6yoVg=="></script>
   <meta charset="UTF-8">
@@ -55,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <script src="/_sdk/fbe2ebfd64647c54.data_sdk.js" integrity="sha512-vkTX6CfvpHc3WbjK+tFJCaDuw4ERA4aEV/e5/7+MMJPMTF4RJYCI6CAwJBT/gtDW+dba4uLSsPUgDjVDHWtgUQ=="></script>
   <link rel="stylesheet" href="Styles.css">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
- <script src="Javascript.js"></script>
+ <script src="javascript.js"></script>
  
 <audio id="bgMusic" autoplay loop></audio>
 <script>
@@ -63,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   const songs = [
     "Mafikizolo_-_Masthokoze_(mp3.pm).mp3",
     "Cater2U.mp3",
-    "FairyTale.mp3",
+    "fairytale.mp3",
   ];
 
   // Pick a random song
@@ -121,6 +75,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
      </div>
     </div>
    </section>
+     <section id="details" class="px-5 py-20 lg:px-8 lg:py-28">
+    
 <section id="details" class="px-5 py-20 lg:px-8 lg:py-28">
   <div class="mx-auto max-w-6xl grid gap-40 md:grid-cols-2 items-center">
     <!-- Left: Photo -->
@@ -244,8 +200,9 @@ Now, five years later, we’re ready to say “I do” in November 2026.  </p>
        class="w-full h-auto object-cover">
 </div>
 
- </div>
+
 </section>
+
 
 
 <!-- DRESS CODE SECTION -->
@@ -430,7 +387,7 @@ Now, five years later, we’re ready to say “I do” in November 2026.  </p>
        <h3 data-template-id="s7-venue-name" class="canva-text serif" style="font-size: 19px; line-height: 1; color: rgb(64, 54, 46); font-weight: 500; font-style: normal;">The Garden Venue Hotel</h3>
        <p data-template-id="s7-address" class="canva-text sans mt-5" style="font-size: 16px; color: rgb(64, 54, 46); font-weight: 400; font-style: normal;">308 Boundary Rd, North Riding AH Randburg 2169</p><a data-template-id="s7-map-button" class="canva-button solid-btn mt-8" href="https://www.google.com/maps/place/The+Garden+Venue+Hotel/@-26.071818,27.924994,17z/data=!3m1!4b1!4m9!3m8!1s0x1e959e1fff26b771:0x9142c85847e89b79!5m2!4m1!1i2!8m2!3d-26.071818!4d27.924994!16s%2Fg%2F11b6_98xp5?entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="background: rgb(104, 113, 93); color: rgb(255, 253, 248); font-weight: 500; font-style: normal; font-size: 16px;">VIEW LOCATION</a>
       </div>
-      <div class="venue-card max-w-none flex flex-col justify-center text-center">
+      <div id="travel" class="venue-card max-w-none flex flex-col justify-center text-center">
        <img data-template-id="s11-travel-image" loading="lazy" class="canva-image travel-image h-48 mb-8" src="Venue1.jpeg" alt="Garden venue with a building, bridge, pond, and lush greenery.">
        <h2 data-template-id="s11-heading" class="canva-text mid-title" style="color: rgb(64, 54, 46); font-weight: 500; font-style: normal; font-size: 24px;">A Place to Rest &amp; Celebrate</h2>
        <p data-template-id="s11-stay-copy" class="canva-text letter-copy mt-8" style="margin-left: 0px; color: rgb(64, 54, 46); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.6;">
@@ -547,90 +504,24 @@ Current account</p>
 
      </aside>
      <div data-template-id="rsvp-form-panel" class="canva-panel p-8 lg:p-12" style="background: rgb(255, 250, 242);">
- <form id="rsvp-form" action="index.php" method="POST" novalidate>
-  <!-- Guest Name -->
-  <div class="sm:col-span-2">
-    <label for="guest-name" class="canva-text mb-2 block text-sm font-semibold" style="color: var(--ink);">
-      Your name
-    </label>
-    <input id="guest-name" name="guest-name"
-           class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[var(--ink)]"
-           type="text" required placeholder="Enter your full name">
-  </div>
-
-  <!-- Attendance -->
-  <div>
-    <label for="attendance" class="canva-text mb-2 block text-sm font-semibold" style="color: var(--ink);">
-      Will you attend?
-    </label>
-    <select id="attendance" name="attendance"
-            class="w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[var(--ink)]" required>
-      <option value="" disabled selected>Please select</option>
-      <option value="Joyfully accepts">Joyfully accepts</option>
-      <option value="Regretfully declines">Regretfully declines</option>
-    </select>
-  </div>
-
-  <!-- Dietary Notes -->
-  <div class="sm:col-span-2">
-    <label for="dietary-notes" class="canva-text mb-2 block text-sm font-semibold" style="color: var(--ink);">
-      Dietary notes
-    </label>
-    <textarea id="dietary-notes" name="dietary-notes"
-              class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[var(--ink)]"
-              rows="3" placeholder="Any dietary requirements"></textarea>
-  </div>
-
-  <!-- Song Request -->
-  <div class="sm:col-span-2">
-    <label for="song-request" class="canva-text mb-2 block text-sm font-semibold" style="color: var(--ink);">
-      Song request
-    </label>
-    <textarea id="song-request" name="song-request"
-              class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[var(--ink)]"
-              rows="3" placeholder="Song you'd love to hear"></textarea>
-  </div>
-
-  <!-- Message -->
-  <div class="sm:col-span-2">
-    <label for="message" class="canva-text mb-2 block text-sm font-semibold" style="color: var(--ink);">
-      A note for the couple
-    </label>
-    <textarea id="message" name="message"
-              class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[var(--ink)]"
-              rows="3" placeholder="Optional message"></textarea>
-  </div>
-
-  <!-- Email -->
-  <div>
-    <label for="email" class="canva-text mb-2 block text-sm font-semibold" style="color: var(--ink);">
-      Your email
-    </label>
-    <input id="email" name="email"
-           class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[var(--ink)]"
-           type="email" placeholder="Optional email">
-  </div>
-
-  <!-- Mobile -->
-  <div>
-    <label for="phone" class="canva-text mb-2 block text-sm font-semibold" style="color: var(--ink);">
-      Your mobile
-    </label>
-    <input id="phone" name="mobile"
-           class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[var(--ink)]"
-           type="text" placeholder="Optional mobile">
-  </div>
-
-  <!-- Submit -->
- <!-- Submit -->
-  <div class="sm:col-span-2">
-    <button id="rsvp-submit"
-            class="canva-button mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 font-bold transition hover:brightness-95"
-            type="submit" style="background: var(--blush); color: var(--ink);">
-      Send RSVP
-    </button>
-  </div>
-
+      <form id="rsvp-form" novalidate="">
+       <div class="grid gap-5 sm:grid-cols-2">
+        <div class="sm:col-span-2"><label data-template-id="guest-name-label" class="canva-text mb-2 block text-sm font-semibold" for="guest-name" style="color: rgb(78, 74, 71); font-weight: 700; font-style: normal; font-size: 16px;">Your name</label> <input id="guest-name" data-template-id="guest-name-input" class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[#4e4a47]" type="text" required="" placeholder="Enter your full name" style="font-weight: 400; font-style: normal; font-size: 16px;">
+        </div>
+        <div><label data-template-id="attendance-label" class="canva-text mb-2 block text-sm font-semibold" for="attendance" style="color: rgb(78, 74, 71); font-weight: 700; font-style: normal; font-size: 16px;">Will you attend?</label> <select id="attendance" class="w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[#4e4a47]" required=""> <option value="" selected="" disabled="">Please select</option> <option value="Joyfully accepts">Joyfully accepts</option> <option value="Regretfully declines">Regretfully declines</option> </select>
+        </div>
+        <div><label data-template-id="guest-count-label" class="canva-text mb-2 block text-sm font-semibold" for="guest-count" style="color: rgb(78, 74, 71); font-weight: 700; font-style: normal; font-size: 16px;">Number of guests</label> <input id="guest-count" data-template-id="guest-count-input" class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[#4e4a47]" type="number" min="1" max="20" required="" placeholder="1" style="font-weight: 400; font-style: normal; font-size: 16px;">
+        </div>
+        <div class="sm:col-span-2"><label data-template-id="dietary-label" class="canva-text mb-2 block text-sm font-semibold" for="dietary-notes" style="color: rgb(78, 74, 71); font-weight: 700; font-style: normal; font-size: 16px;">Dietary notes</label> <textarea id="dietary-notes" data-template-id="dietary-input" class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[#4e4a47]" rows="3" style="font-weight: 400; font-style: normal; font-size: 16px;">Please let us know of any dietary requirements</textarea>
+        </div>
+         <div class="sm:col-span-2"><label data-template-id="dietary-label" class="canva-text mb-2 block text-sm font-semibold" for="dietary-notes" style="color: rgb(78, 74, 71); font-weight: 700; font-style: normal; font-size: 16px;">Song Request</label> <textarea id="dietary-notes" data-template-id="dietary-input" class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[#4e4a47]" rows="3" style="font-weight: 400; font-style: normal; font-size: 16px;">Share a song you would love to hear at the wedding.</textarea>
+        </div>
+        <div class="sm:col-span-2"><label data-template-id="message-label" class="canva-text mb-2 block text-sm font-semibold" for="message" style="color: rgb(78, 74, 71); font-weight: 700; font-style: normal; font-size: 16px;">A note for the couple</label> <textarea id="message" data-template-id="message-input" class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[#4e4a47]" rows="3" style="font-weight: 400; font-style: normal; font-size: 16px;">Optional message</textarea>
+        </div>
+       </div>
+       <p id="form-error" class="mt-4 hidden text-sm font-semibold text-[#a7464f]" role="alert"></p>
+       <p id="form-success" data-template-id="rsvp-success" class="canva-text mt-4 hidden rounded-xl px-4 py-3 text-sm font-semibold" role="status" style="background: rgb(232, 238, 229); color: rgb(57, 91, 64); font-weight: 700; font-style: normal; font-size: 16px;">Thank you — your RSVP has been received with love.</p><button id="rsvp-submit" data-template-id="rsvp-submit" class="canva-button mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 font-bold transition hover:brightness-95" type="submit" style="background: rgb(232, 191, 192); color: rgb(78, 74, 71);"> <span data-template-id="rsvp-submit-text" class="canva-text" style="color: rgb(78, 74, 71); font-weight: 700; font-style: normal; font-size: 16px;">Send RSVP</span> <i data-lucide="send" width="17" height="17"></i> </button>
+      </form>
      </div>
     </div>
 </section>
