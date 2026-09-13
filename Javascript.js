@@ -28,12 +28,6 @@ const submitButton = document.getElementById("rsvp-submit");
 const errorMessage = document.getElementById("form-error");
 const successMessage = document.getElementById("form-success");
 
-// Replace with your actual SplitForm access key
-const SPLITFORM_KEY = "c48273f0b54447aeaf7e2761ecd812c2";
-
-// Replace with your thank-you page URL
-const THANK_YOU_URL = "https://sagovee.github.io/Mo-VeeWedding/thank-you.html";
-
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -43,9 +37,6 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const data = new FormData(form);
-    data.set("access_key", SPLITFORM_KEY);
-    data.set("subject", "New RSVP submission");
-    data.set("redirect", THANK_YOU_URL); // 👈 ensures redirect
 
     const res = await fetch("https://splitforms.com/api/submit", {
       method: "POST",
@@ -55,9 +46,8 @@ form.addEventListener("submit", async (e) => {
 
     const json = await res.json();
     if (json.success) {
-      // SplitForm should handle redirect automatically,
-      // but this ensures it happens even if not
-      window.location.href = THANK_YOU_URL;
+      form.reset();
+      successMessage.classList.remove("hidden");
     } else {
       errorMessage.textContent = "Error: " + (json.message || "Try again");
       errorMessage.classList.remove("hidden");
