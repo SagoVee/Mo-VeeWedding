@@ -46,8 +46,13 @@ form.addEventListener("submit", async (e) => {
 
     const json = await res.json();
     if (json.success) {
+      // Reset form
       form.reset();
+
+      // Show inline success briefly (optional)
       successMessage.classList.remove("hidden");
+
+      // Force redirect to your thank-you page
       window.location.href = "https://sagovee.github.io/Mo-VeeWedding/Thank-you.html";
     } else {
       errorMessage.textContent = "Error: " + (json.message || "Try again");
