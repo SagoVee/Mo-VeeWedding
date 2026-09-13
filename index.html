@@ -503,7 +503,12 @@ Current account</p>
 
      </aside>
      <div data-template-id="rsvp-form-panel" class="canva-panel p-8 lg:p-12" style="background: rgb(255, 250, 242);">
-      <form action="https://splitforms.com/api/submit" method="POST">>
+<form id="rsvp-form" action="https://splitforms.com/api/submit" method="POST">
+  <!-- Hidden fields -->
+  <input type="hidden" name="access_key" value="c48273f0b54447aeaf7e2761ecd812c2">
+  <input type="hidden" name="redirect" value="https://sagovee.github.io/Mo-VeeWedding/thank-you.html">
+  <input type="hidden" name="subject" value="New RSVP submission">
+
   <div class="grid gap-5 sm:grid-cols-2">
     <!-- Name -->
     <div class="sm:col-span-2">
