@@ -1,0 +1,591 @@
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php'; // Make sure you installed PHPMailer via Composer
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Collect and sanitize form values
+    $guest_name   = htmlspecialchars($_POST["guest-name"] ?? "");
+    $attendance   = htmlspecialchars($_POST["attendance"] ?? "");
+    $dietary      = htmlspecialchars($_POST["dietary-notes"] ?? "");
+    $song_request = htmlspecialchars($_POST["song-request"] ?? "");
+    $message      = htmlspecialchars($_POST["message"] ?? "");
+
+    // Email body
+    $body  = "Name: $guest_name\n";
+    $body .= "Attendance: $attendance\n";
+    $body .= "Dietary Notes: $dietary\n";
+    $body .= "Song Request: $song_request\n";
+    $body .= "Message: $message\n";
+    $body .= "Submitted At: " . date("Y-m-d H:i:s") . "\n";
+
+    // Create a new PHPMailer instance
+    $mail = new PHPMailer(true);
+
+    try {
+        // Server settings
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.office365.com';   // Outlook SMTP server
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'SagoVee@outlook.com.co.za'; // Your Outlook email
+        $mail->Password   = 'YOUR_OUTLOOK_PASSWORD';     // Your Outlook password or app password
+        $mail->SMTPSecure = 'tls';
+        $mail->Port       = 587;
+
+        // Recipients
+        $mail->setFrom('SagoVee@outlook.com.co.za', 'Wedding RSVP');
+        $mail->addAddress('SagoVee@outlook.com.co.za'); // Send to yourself
+
+        // Content
+        $mail->Subject = "Wedding RSVP from $guest_name";
+        $mail->Body    = $body;
+
+        $mail->send();
+        $resultMessage = "Thank you — your RSVP has been received!";
+    } catch (Exception $e) {
+        $resultMessage = "Error submitting form: {$mail->ErrorInfo}";
+    }
+} else {
+    $resultMessage = "Invalid request method.";
+}
+?>
+
+
+<!doctype html>
+<html lang="en"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260907-05-0068bad","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/9e99ecf74af2a081.telemetry_sdk.js" integrity="sha512-tZ7fmfTx2KpCLjXQnEuL9azQ4A5+7+xumsx6r/WYVD0zCP/8LP8hDeCypMQesmP+WyAew4g7l5Ah23Bjd6yoVg=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spring Wedding Invitation</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/fbe2ebfd64647c54.data_sdk.js" integrity="sha512-vkTX6CfvpHc3WbjK+tFJCaDuw4ERA4aEV/e5/7+MMJPMTF4RJYCI6CAwJBT/gtDW+dba4uLSsPUgDjVDHWtgUQ=="></script>
+  <link rel="stylesheet" href="Styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
+ <script src="Javascript.js"></script>
+ 
+<audio id="bgMusic" autoplay loop></audio>
+<script>
+      // List of songs
+  const songs = [
+    "Mafikizolo_-_Masthokoze_(mp3.pm).mp3",
+    "Cater2U.mp3",
+    "FairyTale.mp3",
+  ];
+
+  // Pick a random song
+  const randomSong = songs[Math.floor(Math.random() * songs.length)];
+
+  // Get audio element
+  const music = document.getElementById("bgMusic");
+  music.src = randomSong;
+
+  // Set volume (0.0 to 1.0)
+  music.volume = 0.05;
+
+  // Try to play
+  window.addEventListener("load", () => {
+    music.play().catch(() => {
+      console.log("Autoplay blocked — waiting for user interaction.");
+    });
+  });
+
+</script>
+ 
+  <script src="/_sdk/fcb6dc01f91829ac.resizing_sdk.js" type="text/javascript" integrity="sha512-YK8JfnN705qaEaVhiL7pcVB2Rs/BbdX5yxV55Az8zT/1JanyEWTw9HqCF915m9iV1YEaoil8qsjJz03l1Kb0Ug=="></script>
+ </head>
+ <body data-template-id="__page-root" class="w-full min-h-screen" style="background: rgb(255, 250, 242);">
+  <header class="sticky top-0 z-40 border-b border-[#dfd4c7] bg-[#fffaf2]/95 backdrop-blur">
+   <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8" aria-label="Main navigation"><a href="#welcome" data-template-id="nav-monogram" class="canva-link display-font text-2xl italic tracking-wide" style="color: rgb(86, 109, 87); font-weight: 500; font-style: normal; font-size: 16px;">M &amp; V</a> <button id="menu-toggle" type="button" class="rounded-full p-2 text-[#566d57] md:hidden" aria-label="Open navigation menu" aria-controls="mobile-menu" aria-expanded="false"> <i data-lucide="menu" width="23" height="23"></i> </button>
+    <div class="hidden items-center gap-7 text-xs font-semibold uppercase tracking-[0.16em] md:flex"><a data-template-id="nav-details" class="canva-link nav-link" href="#details" style="color: rgb(86, 109, 87); font-weight: 400; font-style: normal; font-size: 16px;">Our Story</a> <a data-template-id="nav-schedule" class="canva-link nav-link" href="#schedule" style="color: rgb(86, 109, 87); font-weight: 400; font-style: normal; font-size: 16px;">Schedule</a> <a data-template-id="nav-gallery" class="canva-link nav-link" href="#gallery" style="color: rgb(86, 109, 87); font-weight: 400; font-style: normal; font-size: 16px;">Gallery</a> <a data-template-id="nav-travel" class="canva-link nav-link" href="#travel" style="color: rgb(86, 109, 87); font-weight: 400; font-style: normal; font-size: 16px;">Travel</a> <a data-template-id="nav-rsvp" class="canva-link rounded-full px-5 py-2.5 transition hover:brightness-95" href="#rsvp" style="background: rgb(232, 191, 192); color: rgb(78, 74, 71); font-weight: 700; font-style: normal; font-size: 16px;">RSVP</a>
+    </div>
+    
+   </nav>
+   <!-- Mobile menu (hidden by default) -->
+<div id="mobile-menu" 
+     class="hidden flex flex-col gap-6 px-5 py-6 bg-[#fffaf2] md:hidden transition-all duration-300 ease-in-out">
+  <a href="#details" class="canva-link nav-link">Our Story</a>
+  <a href="#schedule" class="canva-link nav-link">Schedule</a>
+  <a href="#gallery" class="canva-link nav-link">Gallery</a>
+  <a href="#travel" class="canva-link nav-link">Travel</a>
+  <a href="#rsvp" class="canva-link rounded-full px-5 py-2.5 bg-[#e8bfc0] text-[#4e4a47] font-bold">RSVP</a>
+</div>
+
+  </header>
+  <main>
+   <section id="welcome" data-template-id="hero-section" class="canva-banner relative flex min-h-[650px] items-center overflow-hidden" style="background: rgb(247, 247, 247);"><img data-template-id="hero-image" loading="lazy" class="canva-image absolute inset-0 h-full w-full object-cover" src="Ring Picture.jpg?auto=compress&amp;cs=tinysrgb&amp;w=" alt="A young couple enjoying a romantic beach wedding during a vibrant sunset.">
+    <div class="hero-overlay absolute inset-0"></div>
+    <div class="relative mx-auto w-full max-w-7xl px-6 py-24 lg:px-16">
+     <div class="max-w-3xl text-white">
+      <p data-template-id="hero-eyebrow" class="canva-text reveal mb-6 text-xs font-bold uppercase tracking-[0.28em]" style="color: rgb(246, 223, 224); font-weight: 700; font-style: normal; font-size: 16px;">Together with our families</p>
+      <div class="botanical-rule reveal mb-7 justify-start text-[#f6dfe0]">
+       <span class="leaf-mark">❦</span>
+      </div>
+      <h1 data-template-id="hero-names" class="canva-text display-font reveal-delay mb-7 max-w-2xl leading-tight" style="color: rgb(255, 250, 242); font-weight: 500; font-style: normal; font-size: 32px;">Moefi &amp; Vuyelwa</h1>
+      <p data-template-id="hero-message" class="canva-text reveal-delay mb-9 max-w-xl text-lg leading-relaxed" style="color: rgb(255, 250, 242); font-weight: 400; font-style: normal; font-size: 18px; line-height: 1.6;">Joyfully invite you to share in the celebration of their love and the beginning of their next chapter.</p>
+      <div class="reveal-delay mb-10 flex flex-wrap gap-x-7 gap-y-3 border-y border-white/45 py-5 font-medium"><span data-template-id="hero-date" class="canva-text" style="color: rgb(255, 250, 242); font-weight: 700; font-style: normal; font-size: 16px;">14 November 2026</span> <span class="hidden text-[#f6dfe0] sm:inline">✦</span> <span data-template-id="hero-venue" class="canva-text" style="color: rgb(255, 250, 242); font-weight: 700; font-style: normal; font-size: 16px;">The Garden Venue Hotel</span>
+      </div><a data-template-id="hero-rsvp-button" class="canva-button inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-semibold shadow-lg transition hover:-translate-y-0.5" href="#rsvp" style="background: rgb(255, 250, 242); color: rgb(86, 109, 87);"> <span data-template-id="hero-rsvp-button-text" class="canva-text" style="color: rgb(86, 109, 87); font-weight: 700; font-style: normal; font-size: 16px;">Kindly RSVP</span> <i data-lucide="arrow-down" width="17" height="17"></i> </a>
+     </div>
+    </div>
+   </section>
+<section id="details" class="px-5 py-20 lg:px-8 lg:py-28">
+  <div class="mx-auto max-w-6xl grid gap-40 md:grid-cols-2 items-center">
+    <!-- Left: Photo -->
+    <div class="rounded-[1.7rem] overflow-hidden shadow-sm">
+      <img src="DSC00324.jpg" alt="Couple embracing outdoors" class="w-full h-auto object-cover">
+    </div>
+
+    <!-- Right: Story -->
+    <div class="text-left">
+      <h2 class="display-font mb-5 leading-tight" style="color: rgb(78,74,71); font-weight: 300; font-size: 32px;">
+        GIRL MEETS BOY.<br>BOY FALLS FOR GIRL.
+      </h2>
+      <p class="leading-relaxed mb-4" style="color: rgb(78,74,71); font-size: 18px;">
+We first crossed paths at flight school in 2021, chasing dreams above the clouds. Hours in the cockpit turned into laughter, friendship, and soon enough — love.
+
+Our Journey
+From training flights to adventures across South Africa, we’ve been side by side through challenges and celebrations. In July 2025, we sealed our promise with an engagement that felt as natural as the skies we share.
+
+The Next Chapter
+Now, five years later, we’re ready to say “I do” in November 2026.  </p>
+      <p class="leading-relaxed" style="color: rgb(78,74,71); font-size: 16px;">
+        We can’t wait to celebrate with all of you who’ve been part of our story.     
+      </p>
+    </div>
+  </div>
+</section>
+ <!--
+ <section id="details" class="px-5 py-20 lg:px-8 lg:py-28">
+    <div class="mx-auto max-w-6xl">
+     <div class="mx-auto mb-14 max-w-2xl text-center">
+      <p data-template-id="details-eyebrow" class="canva-text mb-4 text-xs font-bold uppercase tracking-[0.24em]" style="color: rgb(126, 146, 123); font-weight: 700; font-style: normal; font-size: 16px;">The celebration</p>
+      <h2 data-template-id="details-title" class="canva-text display-font mb-5 leading-tight" style="color: rgb(78, 74, 71); font-weight: 500; font-style: normal; font-size: 24px;">A day made for love</h2>
+      <div class="botanical-rule">
+       <span class="leaf-mark">❦</span>
+      </div>
+     </div>
+   
+     
+     <div class="grid gap-5 md:grid-cols-3">
+      <article data-template-id="detail-ceremony-card" class="canva-card rounded-[1.7rem] p-8 text-center shadow-sm" style="background: rgb(246, 230, 228);"><i data-lucide="heart" class="mx-auto mb-5 text-[#7e927b]" width="26" height="26"></i>
+       <h3 data-template-id="detail-ceremony-title" class="canva-text display-font mb-3" style="color: rgb(86, 109, 87); font-weight: 600; font-style: normal; font-size: 19px;">The Ceremony</h3>
+       <p data-template-id="detail-ceremony-text" class="canva-text leading-relaxed" style="color: rgb(78, 74, 71); font-weight: 400; font-style: normal; font-size: 16px;">Time: 14:30 for 15:00 @ The Garden Venue Hotel </p>
+      </article>
+      <article data-template-id="detail-celebration-card" class="canva-card rounded-[1.7rem] p-8 text-center shadow-sm" style="background: rgb(232, 238, 229);"><i data-lucide="sparkles" class="mx-auto mb-5 text-[#7e927b]" width="26" height="26"></i>
+       <h3 data-template-id="detail-celebration-title" class="canva-text display-font mb-3" style="color: rgb(86, 109, 87); font-weight: 600; font-style: normal; font-size: 19px;">The Celebration</h3>
+       <p data-template-id="detail-celebration-text" class="canva-text leading-relaxed" style="color: rgb(78, 74, 71); font-weight: 400; font-style: normal; font-size: 16px;">[Reception details, drinks, dinner, and dancing]</p>
+      </article>
+      <article data-template-id="detail-location-card" class="canva-card rounded-[1.7rem] p-8 text-center shadow-sm" style="background: rgb(238, 233, 241);"><i data-lucide="map-pin" class="mx-auto mb-5 text-[#7e927b]" width="26" height="26"></i>
+       <h3 data-template-id="detail-location-title" class="canva-text display-font mb-3" style="color: rgb(86, 109, 87); font-weight: 600; font-style: normal; font-size: 19px;">The Venue</h3>
+       <p data-template-id="detail-location-text" class="canva-text leading-relaxed" style="color: rgb(78, 74, 71); font-weight: 400; font-style: normal; font-size: 16px;">   Address: 308 Boundary Rd, North Riding AH Randburg 2169 </p>
+      </article>
+     </div>
+    </div>
+   </section>
+ 
+   <section id="schedule" data-template-id="schedule-section" class="canva-section px-5 py-20 lg:px-8 lg:py-28" style="background: rgb(238, 242, 234);">
+    <div class="mx-auto max-w-6xl">
+     <div class="mb-14 text-center">
+      <p data-template-id="schedule-eyebrow" class="canva-text mb-4 text-xs font-bold uppercase tracking-[0.24em]" style="color: rgb(126, 146, 123); font-weight: 700; font-style: normal; font-size: 16px;">Wedding day</p>
+      <h2 data-template-id="schedule-title" class="canva-text display-font mb-5" style="color: rgb(78, 74, 71); font-weight: 500; font-style: normal; font-size: 24px;">The day's gentle rhythm</h2>
+      <p data-template-id="schedule-intro" class="canva-text mx-auto max-w-xl leading-relaxed" style="color: rgb(78, 74, 71); font-weight: 400; font-style: normal; font-size: 16px;">We cannot wait to spend this beautiful day together. Please arrive with time to settle in and enjoy the moment.</p>
+     </div>
+     <div class="grid gap-7 md:grid-cols-3">
+      <article class="relative border-t border-[#b9c7b4] pt-7 text-center">
+       <p data-template-id="schedule-one-time" class="canva-text mb-3 text-sm font-bold uppercase tracking-[0.17em]" style="color: rgb(86, 109, 87); font-weight: 700; font-style: normal; font-size: 16px;">[Time]</p>
+       <h3 data-template-id="schedule-one-title" class="canva-text display-font mb-3" style="color: rgb(78, 74, 71); font-weight: 600; font-style: normal; font-size: 19px;">Welcome</h3>
+       <p data-template-id="schedule-one-text" class="canva-text mx-auto max-w-xs leading-relaxed" style="color: rgb(78, 74, 71); font-weight: 400; font-style: normal; font-size: 16px;">[Guest arrival and welcome refreshments]</p>
+      </article>
+      <article class="relative border-t border-[#b9c7b4] pt-7 text-center">
+       <p data-template-id="schedule-two-time" class="canva-text mb-3 text-sm font-bold uppercase tracking-[0.17em]" style="color: rgb(86, 109, 87); font-weight: 700; font-style: normal; font-size: 16px;">[Time]</p>
+       <h3 data-template-id="schedule-two-title" class="canva-text display-font mb-3" style="color: rgb(78, 74, 71); font-weight: 600; font-style: normal; font-size: 19px;">Ceremony</h3>
+       <p data-template-id="schedule-two-text" class="canva-text mx-auto max-w-xs leading-relaxed" style="color: rgb(78, 74, 71); font-weight: 400; font-style: normal; font-size: 16px;">[Wedding ceremony begins]</p>
+      </article>
+      <article class="relative border-t border-[#b9c7b4] pt-7 text-center">
+       <p data-template-id="schedule-three-time" class="canva-text mb-3 text-sm font-bold uppercase tracking-[0.17em]" style="color: rgb(86, 109, 87); font-weight: 700; font-style: normal; font-size: 16px;">[Time]</p>
+       <h3 data-template-id="schedule-three-title" class="canva-text display-font mb-3" style="color: rgb(78, 74, 71); font-weight: 600; font-style: normal; font-size: 19px;">Dinner &amp; Dancing</h3>
+       <p data-template-id="schedule-three-text" class="canva-text mx-auto max-w-xs leading-relaxed" style="color: rgb(78, 74, 71); font-weight: 400; font-style: normal; font-size: 16px;">[Reception, dinner, and joyful celebrations]</p>
+      </article>
+     </div>
+    </div>
+   </section>
+   -->
+<!-- SCHEDULE SECTION -->
+<section id="schedule" 
+         class="px-5 py-20 lg:px-8 lg:py-28" 
+         style="position: relative; overflow: hidden;">
+
+  <!-- Background image layer -->
+  <div class="scheduleBG"></div>
+
+  <!-- Content layer -->
+  <div class="mx-auto max-w-6xl grid gap-40 md:grid-cols-2 items-center relative z-10">
+    <!-- Left: Wedding details -->
+    <div class="text-left">
+      <h2 class="display-font mb-8 leading-tight" 
+          style="color: rgb(78,74,71); font-weight: 300; font-size: 32px;">
+        Bear witness to<br>our special day
+      </h2>
+
+      <p class="mb-6 font-bold uppercase tracking-[0.17em]" 
+         style="color: rgba(27, 58, 30, 0.815); font-size: 20px;">DATE:</p>
+      <p style="color: rgb(78,74,71); font-size: 18px;">26 November 2026 at 02:30 PM</p>
+
+      <p class="mt-6 mb-4 font-bold uppercase tracking-[0.17em]" 
+         style="color: rgba(27, 58, 30, 0.815); font-size: 20px;">VENUE:</p>
+      <p style="color: rgb(78,74,71); font-size: 18px;">The Garden Venue Hotel</p>
+
+      <p class="mt-6 mb-4 font-bold uppercase tracking-[0.17em]" 
+         style="color: rgba(27, 58, 30, 0.815); font-size: 20px;">DRESS CODE:</p>
+      <p style="color: rgb(78,74,71); font-size: 18px;">
+        Formal attire, Spring pastels, Romantic, Natural and elegant.
+      </p>
+    </div>
+
+<!-- Right: Photo -->
+<div class="rounded-[1.7rem] overflow-hidden" 
+     style="border: 1px solid rgba(78,74,71,0.3);
+            box-shadow: 0 6px 18px rgb(0, 0, 0);">
+  <img src="DSC00703.jpg" 
+       alt="Bride and groom walking outdoors" 
+       class="w-full h-auto object-cover">
+</div>
+
+ </div>
+</section>
+
+
+<!-- DRESS CODE SECTION -->
+<section data-template-id="dress-section" 
+         class="canva-section px-5 py-20 lg:px-8" 
+         style="position: relative; overflow: hidden;">
+
+<div style="
+  position: absolute;
+  inset: 0;
+  background: url('Flowers.jpeg') center center / cover no-repeat;
+  opacity: 0.2;   /* transparency only on the image */
+  z-index: 0;
+  border-radius: 0 0 1.7rem 1.7rem;
+">
+</div>
+
+  <!-- Content layer -->
+  <div class="mx-auto max-w-6xl relative z-10">
+    <div class="mb-12 text-center">
+      <p data-template-id="gallery-eyebrow" 
+         class="canva-text mb-4 text-xs font-bold uppercase tracking-[0.24em]" 
+         style="color: rgb(126, 146, 123); font-size: 16px;">
+         Dress Code
+      </p>
+      <h2 data-template-id="gallery-title" 
+          class="canva-text display-font" 
+          style="color: rgb(78, 74, 71); font-weight: 500; font-size: 24px;">
+          Formal attire, Spring pastels, Romantic, Natural and elegant.
+      </h2>
+    </div>
+
+    <div class="dress-panel">
+      <div class="swatches" aria-label="Wedding colour palette">
+        <!-- Swatches -->
+        <div class="flex flex-col items-center gap-3">
+          <span class="swatch" style="background:#E4ADA3"></span>
+          <span class="canva-text sans text-center" style="font-size: 18px;">Blush Peach</span>
+        </div>
+        <div class="flex flex-col items-center gap-3">
+          <span class="swatch" style="background:#F6F3E8"></span>
+          <span class="canva-text sans text-center" style="font-size: 18px;">Soft Ivory</span>
+        </div>
+        <div class="flex flex-col items-center gap-3">
+          <span class="swatch" style="background:#A4AA9B"></span>
+          <span class="canva-text sans text-center" style="font-size: 18px;">Sage Green</span>
+        </div>
+        <div class="flex flex-col items-center gap-3">
+          <span class="swatch" style="background:#C48078"></span>
+          <span class="canva-text sans text-center" style="font-size: 18px;">Muted Coral Rose</span>
+        </div>
+        <div class="flex flex-col items-center gap-3">
+          <span class="swatch" style="background:#DCC7B4"></span>
+          <span class="canva-text sans text-center" style="font-size: 18px;">Champagne Beige</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Gallery -->
+<section id="gallery" class="px-5 py-20 lg:px-8 lg:py-28">
+  <div class="mx-auto max-w-6xl">
+    <div class="mb-12 text-center">
+      <p data-template-id="gallery-eyebrow" 
+         class="canva-text mb-4 text-xs font-bold uppercase tracking-[0.24em]" 
+         style="color: rgb(126, 146, 123); font-weight: 700; font-size: 16px;">
+         A little inspiration
+      </p>
+      <h2 data-template-id="gallery-title" 
+          class="canva-text display-font" 
+          style="color: rgb(78, 74, 71); font-weight: 500; font-size: 24px;">
+          Romance in bloom
+      </h2>
+    </div>
+
+    <!-- Scrollable row -->
+    <div class="flex gap-5 overflow-x-auto pb-4">
+        
+          <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
+        <img data-template-id="gallery-image-three" loading="lazy" 
+             class="canva-image h-80 w-full object-cover" 
+             src="Images/DSC00650.jpg" 
+             alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
+      </figure>
+        
+
+          <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
+        <img data-template-id="gallery-image-three" loading="lazy" 
+             class="canva-image h-80 w-full object-cover" 
+             src="Images/DSC00339.jpg" 
+             alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
+      </figure>
+            <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
+        <img data-template-id="gallery-image-three" loading="lazy" 
+             class="canva-image h-80 w-full object-cover" 
+             src="Images/DSC00642.jpg" 
+             alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
+      </figure>
+         
+          <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
+        <img data-template-id="gallery-image-three" loading="lazy" 
+             class="canva-image h-80 w-full object-cover" 
+             src="Images/DSC00396.jpg" 
+             alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
+      </figure>
+
+            <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
+        <img data-template-id="gallery-image-three" loading="lazy" 
+             class="canva-image h-80 w-full object-cover" 
+             src="Images/DSC00314.jpg" 
+             alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
+      </figure>
+
+ 
+
+      <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
+        <img data-template-id="gallery-image-two" loading="lazy" 
+             class="canva-image h-80 w-full object-cover" 
+             src="Images/DSC00281.jpg" 
+             alt="Elegant bridal bouquet held by a bride in an outdoor setting, showcasing pastel florals.">
+      </figure>
+
+             <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
+        <img data-template-id="gallery-image-three" loading="lazy" 
+             class="canva-image h-80 w-full object-cover" 
+             src="Images/DSC00490.jpg" 
+             alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
+      </figure>
+
+
+      <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
+        <img data-template-id="gallery-image-three" loading="lazy" 
+             class="canva-image h-80 w-full object-cover" 
+             src="Images/DSC00658.jpg" 
+             alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
+      </figure>
+      
+
+          <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
+        <img data-template-id="gallery-image-three" loading="lazy" 
+             class="canva-image h-80 w-full object-cover" 
+             src="Images/DSC00326.jpg" 
+             alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
+      </figure>
+    
+
+          <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
+        <img data-template-id="gallery-image-three" loading="lazy" 
+             class="canva-image h-80 w-full object-cover" 
+             src="Images/DSC00428.jpg" 
+             alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
+      </figure>
+
+      <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
+        <img data-template-id="gallery-image-three" loading="lazy" 
+             class="canva-image h-80 w-full object-cover" 
+             src="Images/DSC00334.jpg" 
+             alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
+      </figure>
+
+      <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
+        <img data-template-id="gallery-image-three" loading="lazy" 
+             class="canva-image h-80 w-full object-cover" 
+             src="Images/DSC00460.jpg" 
+             alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
+      </figure>
+    </div>
+  </div>
+</section>
+
+
+<!-- TRAVEL SECTION  -->
+<section  id="travel" data-template-id="travel-section" class="canva-section px-5 py-20 lg:px-8 lg:py-28" style="background: rgb(243, 238, 229)">
+    <div class="section-inner" >
+          <p data-template-id="travel-eyebrow" class="canva-text mb-4 text-xs font-bold uppercase tracking-[0.24em]" style="color: rgb(126, 146, 123); font-weight: 700; font-style: normal; font-size: 16px; text-align: center;">For our travelling guests</p>
+      <h2 data-template-id="travel-title" class="canva-text display-font" style="color: rgb(78, 74, 71); font-weight: 500; font-style: normal; font-size: 24px;text-align: center;">A few helpful details <br> </h2>
+      <br>
+
+     <div class="split-grid items-stretch gap-8 lg:gap-12">
+      <div class="venue-card max-w-none flex flex-col justify-center">
+       <p data-template-id="s7-card-label" class="canva-text eyebrow mb-6" style="color: rgb(104, 113, 93); font-weight: 500; font-style: normal; font-size: 16px;">THE CEREMONY</p>
+       <h3 data-template-id="s7-venue-name" class="canva-text serif" style="font-size: 19px; line-height: 1; color: rgb(64, 54, 46); font-weight: 500; font-style: normal;">The Garden Venue Hotel</h3>
+       <p data-template-id="s7-address" class="canva-text sans mt-5" style="font-size: 16px; color: rgb(64, 54, 46); font-weight: 400; font-style: normal;">308 Boundary Rd, North Riding AH Randburg 2169</p><a data-template-id="s7-map-button" class="canva-button solid-btn mt-8" href="https://www.google.com/maps/place/The+Garden+Venue+Hotel/@-26.071818,27.924994,17z/data=!3m1!4b1!4m9!3m8!1s0x1e959e1fff26b771:0x9142c85847e89b79!5m2!4m1!1i2!8m2!3d-26.071818!4d27.924994!16s%2Fg%2F11b6_98xp5?entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="background: rgb(104, 113, 93); color: rgb(255, 253, 248); font-weight: 500; font-style: normal; font-size: 16px;">VIEW LOCATION</a>
+      </div>
+      <div class="venue-card max-w-none flex flex-col justify-center text-center">
+       <img data-template-id="s11-travel-image" loading="lazy" class="canva-image travel-image h-48 mb-8" src="Venue1.jpeg" alt="Garden venue with a building, bridge, pond, and lush greenery.">
+       <h2 data-template-id="s11-heading" class="canva-text mid-title" style="color: rgb(64, 54, 46); font-weight: 500; font-style: normal; font-size: 24px;">A Place to Rest &amp; Celebrate</h2>
+       <p data-template-id="s11-stay-copy" class="canva-text letter-copy mt-8" style="margin-left: 0px; color: rgb(64, 54, 46); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.6;">
+        The Garden Venue hotel <br>
+<a href="mailto:info@thegardenvenue.co.za" 
+   class="underline text-[#566d57] hover:text-[#7e927b]">
+   info@thegardenvenue.co.za
+</a> <br>
+011 795 0000 <br>
+Booking reference: Moefi and Vuyelwa</p>
+       <p data-template-id="s11-travel-copy" class="canva-text letter-copy mt-6" style="margin-left: 0px; color: rgb(64, 54, 46); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.6;"></p><a data-template-id="s11-button" class="canva-button outline-btn mt-8" href="https://book.nightsbridge.com/23315" target="_blank" rel="noopener noreferrer" style="color: rgb(104, 113, 93); font-weight: 500; font-style: normal; font-size: 16px;">BOOKINGS</a>
+      </div>
+     </div>
+    </div>
+</section>
+<!--
+   <section id="travel" data-template-id="travel-section" class="canva-section px-5 py-20 lg:px-8 lg:py-28" style="background: rgb(243, 238, 229);">
+    <div class="mx-auto max-w-6xl">
+     <div class="mb-14 text-center">
+      <p data-template-id="travel-eyebrow" class="canva-text mb-4 text-xs font-bold uppercase tracking-[0.24em]" style="color: rgb(126, 146, 123); font-weight: 700; font-style: normal; font-size: 16px;">For our travelling guests</p>
+      <h2 data-template-id="travel-title" class="canva-text display-font" style="color: rgb(78, 74, 71); font-weight: 500; font-style: normal; font-size: 24px;">A few helpful details</h2>
+     </div>
+     <div class="grid gap-6 md:grid-cols-2">
+      <article data-template-id="travel-card" class="canva-card rounded-[1.7rem] p-8" style="background: rgb(255, 250, 242);" ><i data-lucide="plane" class="mb-5 text-[#7e927b]" width="28" height="28"></i>
+       <h3 data-template-id="travel-card-title" class="canva-text display-font mb-3" style="color: rgb(86, 109, 87); font-weight: 600; font-style: normal; font-size: 19px;">Getting There</h3>
+
+  <div class="mx-auto grid max-w-5xl items-center gap-8 rounded-[2rem] border border-[#d9c6a8] p-8 md:grid-cols-[auto_1fr] md:p-12">
+ 
+  <div class="flex h-20 w-20 items-center justify-center rounded-full bg-[#fff9ee] text-[#72836c]">
+    <i data-lucide="plane" width="34" height="34"></i>
+  </div>
+    
+
+  <p data-template-id="travel-card-text" 
+     class="canva-text leading-relaxed" 
+     style="color: rgb(78, 74, 71); font-weight: 400; font-size: 16px;">
+     For directions, tap below to open in your preferred navigation app:
+     <br>
+     <a href="https://www.google.com/maps/place/The+Garden+Venue+Hotel/@-26.071818,27.924994,17z/data=!3m1!4b1!4m9!3m8!1s0x1e959e1fff26b771:0x9142c85847e89b79!5m2!4m1!1i2!8m2!3d-26.071818!4d27.924994!16s%2Fg%2F11b6_98xp5?entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="underline text-[#566d57] hover:text-[#7e927b]">
+        📍 The Garden Venue Hotel
+     </a>
+  </p>
+</div>
+      </article>
+      <article data-template-id="stay-card" class="canva-card rounded-[1.7rem] p-8" style="background: rgb(255, 250, 242);"><i data-lucide="bed-double" class="mb-5 text-[#7e927b]" width="28" height="28"></i>
+       <h3 data-template-id="stay-card-title" class="canva-text display-font mb-3" style="color: rgb(86, 109, 87); font-weight: 600; font-style: normal; font-size: 19px;">Where to Stay</h3>
+<p data-template-id="stay-card-text" 
+   class="canva-text leading-relaxed" 
+   style="color: rgb(78, 74, 71); font-weight: 400; font-size: 16px;">
+   Accommodation is available at 
+   <span style="font-weight:600; color: rgba(27,58,30,0.85);">The Garden Venue Hotel</span>. 
+   <br>
+   <a href="https://book.nightsbridge.com/23315" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="underline text-[#566d57] hover:text-[#7e927b]">
+      📌 Reserve your stay here
+   </a>
+</p>
+    info@thegardenvenue.co.za <br>
+    011 795 0000<br>
+    Booking reference: <bold>Moefi and Vuyelwa</bold> </p>
+      </article>
+     </div>
+    </div>
+   </section>
+
+   -->
+<!-- REGISTRY SECTION -->
+   <section id="registry" class="w-section ivory">
+    <div class="section-inner">
+     <div class="two-col">
+      <article>
+       <h2 data-template-id="s12-registry-heading" class="canva-text serif" style="font-size: 24px; font-weight: 500; line-height: 0.9; color: rgb(64, 54, 46); font-style: normal;">Gift Registry</h2>
+       <p data-template-id="s12-registry-copy" class="canva-text letter-copy mt-10" style="margin-left: 0px; color: rgb(64, 54, 46); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.6;">Your Presence is our Present. However, should you wish to bless us with a gift, we’ve put together a little registry below. We are truly grateful for your love, support and generosity
+
+</p><a data-template-id="s12-registry-button" class="canva-button outline-btn mt-10" href="https://m.yuppiechef.com/registry.htm?uuid=a4ec0a5b-3c94-46a5-81f2-a97181b65501&amp;action=view" target="_blank" rel="noopener noreferrer" style="color: rgb(104, 113, 93); font-weight: 500; font-style: normal; font-size: 16px;">VIEW REGISTRY</a>
+      </article>
+      <article>
+       <h2 data-template-id="s12-faq-heading" class="canva-text serif" style="font-size: 24px; font-weight: 500; line-height: 0.9; color: rgb(64, 54, 46); font-style: normal;">Alternative Gifting</h2>
+       <p data-template-id="s12-faq-copy" class="canva-text letter-copy mt-10" style="margin-left: 0px; color: rgb(64, 54, 46); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.7;">There will be a table at the reception. Please hand gifts to Jane Kgomongwe or Zandile Jafta.
+
+Moefi Kgomongwe
+ABSA account number: 4117 886 563
+Branch code: 632005
+Current account</p>
+      </article>
+     </div>
+    </div>
+   </section>
+
+   <!-- RSVP SECTION -->
+   <section id="rsvp" class="px-5 py-20 lg:px-8 lg:py-28">
+    <div class="mx-auto grid max-w-5xl overflow-hidden rounded-[2rem] bg-[#566d57] shadow-xl lg:grid-cols-[.82fr_1.18fr]">
+     <aside class="p-9 text-[#fffaf2] lg:p-12">
+      <p data-template-id="rsvp-eyebrow" class="canva-text mb-5 text-xs font-bold uppercase tracking-[0.24em]" style="color: rgb(232, 191, 192); font-weight: 700; font-style: normal; font-size: 16px;">Kindly reply</p>
+      <h2 data-template-id="rsvp-title" class="canva-text display-font mb-5 leading-tight" style="color: rgb(255, 250, 242); font-weight: 500; font-style: normal; font-size: 24px;">Will you join us?</h2>
+      <p data-template-id="rsvp-text" class="canva-text leading-relaxed" style="color: rgb(255, 250, 242); font-weight: 400; font-style: normal; font-size: 16px; line-height: 1.6;">Please share your response so we can prepare a beautiful celebration with you in mind.</p>
+      <div class="mt-10 text-[#e8bfc0]">
+       ❦ &nbsp; ❦ &nbsp; ❦
+      </div>
+    <h2 data-template-id="rsvp-title" class="canva-text display-font mb-5 leading-tight" style="color: rgb(255, 250, 242); font-weight: 500; font-style: normal; font-size: 24px;">Kindly Take Note</h2>
+
+<ul data-template-id="rsvp-text" 
+    class="canva-text leading-relaxed" 
+    style="color: rgb(255, 250, 242); font-weight: 400; font-size: 16px; line-height: 1.6; list-style-type: disc; padding-left: 1.2rem;">
+  <li>Child‑free wedding</li>
+  <li>1 RSVP per person</li>
+  <li>Couples to separately RSVP</li>
+</ul>
+
+     </aside>
+     <div data-template-id="rsvp-form-panel" class="canva-panel p-8 lg:p-12" style="background: rgb(255, 250, 242);">
+      <form id="rsvp-form" action="rsvp.php" method="POST" novalidate>
+  <input id="guest-name" name="guest-name" type="text" required placeholder="Enter your full name">
+  <select id="attendance" name="attendance" required>
+    <option value="" disabled selected>Please select</option>
+    <option value="Joyfully accepts">Joyfully accepts</option>
+    <option value="Regretfully declines">Regretfully declines</option>
+  </select>
+  <textarea id="dietary-notes" name="dietary-notes"></textarea>
+  <textarea id="song-request" name="song-request"></textarea>
+  <textarea id="message" name="message"></textarea>
+  <button type="submit">Send RSVP</button>
+</form>
+
+     </div>
+    </div>
+</section>
+<section data-template-id="thanks-section" class="canva-section px-5 py-20 text-center lg:px-8 lg:py-28" style="background: rgb(255, 250, 242);">
+    <div class="mx-auto max-w-2xl">
+     <div class="botanical-rule mb-6">
+      <span class="leaf-mark">❦</span>
+     </div>
+     <h2 data-template-id="thanks-title" class="canva-text display-font mb-5" style="color: rgb(78, 74, 71); font-weight: 500; font-style: normal; font-size: 24px;">With love and gratitude</h2>
+     <p data-template-id="thanks-text" class="canva-text leading-relaxed" style="color: rgb(78, 74, 71); font-weight: 400; font-style: normal; font-size: 16px; line-height: 1.7;">Your love, laughter, and presence mean the world to us. We are so grateful to celebrate this moment with the people we cherish.</p>
+    </div>
+</section>
+</main>
+<footer data-template-id="footer-section" class="canva-footer px-5 py-8 text-center" style="background: rgb(86, 109, 87);">
+   <p data-template-id="footer-text" class="canva-text text-sm" style="color: rgb(255, 250, 242); font-weight: 400; font-style: normal; font-size: 16px;">Made with love for Moefi &amp; Vuyelwa</p>
+</footer>
+<script src="/_sdk/92570d8e491862b9.editing_sdk.js" 
+        integrity="sha512-FgTgBgZOGUl1XBrojWdmYvV2Ka+jYLWeeIrMhp1Q1xMV3FJfF+VJFjO6hw+EDGnXYa+zMZXNIP5UYLxGsdfP6g==" 
+        crossorigin="anonymous"></script>
+
+ 
+</body></html>
