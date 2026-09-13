@@ -1,9 +1,4 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-require 'vendor/autoload.php'; // Make sure you installed PHPMailer via Composer
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Collect and sanitize form values
     $guest_name   = htmlspecialchars($_POST["guest-name"] ?? "");
@@ -11,43 +6,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $dietary      = htmlspecialchars($_POST["dietary-notes"] ?? "");
     $song_request = htmlspecialchars($_POST["song-request"] ?? "");
     $message      = htmlspecialchars($_POST["message"] ?? "");
+    $email        = htmlspecialchars($_POST["email"] ?? "");
+    $mobile       = htmlspecialchars($_POST["mobile"] ?? "");
+
+    // Recipient email
+    $to = "sagovee@outlook.com";
+    $subject = "New RSVP Submission from $guest_name";
+
+    // Email headers (safe defaults)
+    $headers  = "From: sagovee@outlook.com\r\n";
+    if (!empty($email)) {
+        $headers .= "Reply-To: $email\r\n";
+    }
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
     // Email body
+    $body = "You have received a new message from the DecodeIT contact form:\n\n";
+    $body .= "--------------------------------------------\n";
     $body  = "Name: $guest_name\n";
     $body .= "Attendance: $attendance\n";
     $body .= "Dietary Notes: $dietary\n";
     $body .= "Song Request: $song_request\n";
     $body .= "Message: $message\n";
+    $body .= "Mobile: $mobile\n";
+    $body .= "Email: $email\n";
+    $body .= "--------------------------------------------\n";
     $body .= "Submitted At: " . date("Y-m-d H:i:s") . "\n";
 
-    // Create a new PHPMailer instance
-    $mail = new PHPMailer(true);
-
-    try {
-        // Server settings
-        $mail->isSMTP();
-        $mail->Host       = 'smtp.office365.com';   // Outlook SMTP server
-        $mail->SMTPAuth   = true;
-        $mail->Username   = 'SagoVee@outlook.com.co.za'; // Your Outlook email
-        $mail->Password   = 'YOUR_OUTLOOK_PASSWORD';     // Your Outlook password or app password
-        $mail->SMTPSecure = 'tls';
-        $mail->Port       = 587;
-
-        // Recipients
-        $mail->setFrom('SagoVee@outlook.com.co.za', 'Wedding RSVP');
-        $mail->addAddress('SagoVee@outlook.com.co.za'); // Send to yourself
-
-        // Content
-        $mail->Subject = "Wedding RSVP from $guest_name";
-        $mail->Body    = $body;
-
-        $mail->send();
-        $resultMessage = "Thank you — your RSVP has been received!";
-    } catch (Exception $e) {
-        $resultMessage = "Error submitting form: {$mail->ErrorInfo}";
+    // Send the email
+    if (mail($to, $subject, $body, $headers)) {
+        echo "Thank you — your RSVP has been received!";
+    } else {
+        echo "Error submitting form. Please try again later.";
     }
 } else {
-    $resultMessage = "Invalid request method.";
+    echo "Invalid request method.";
 }
 ?>
 
@@ -554,18 +547,89 @@ Current account</p>
 
      </aside>
      <div data-template-id="rsvp-form-panel" class="canva-panel p-8 lg:p-12" style="background: rgb(255, 250, 242);">
-      <form id="rsvp-form" action="rsvp.php" method="POST" novalidate>
-  <input id="guest-name" name="guest-name" type="text" required placeholder="Enter your full name">
-  <select id="attendance" name="attendance" required>
-    <option value="" disabled selected>Please select</option>
-    <option value="Joyfully accepts">Joyfully accepts</option>
-    <option value="Regretfully declines">Regretfully declines</option>
-  </select>
-  <textarea id="dietary-notes" name="dietary-notes"></textarea>
-  <textarea id="song-request" name="song-request"></textarea>
-  <textarea id="message" name="message"></textarea>
-  <button type="submit">Send RSVP</button>
-</form>
+ <form id="rsvp-form" action="index.php" method="POST" novalidate>
+  <!-- Guest Name -->
+  <div class="sm:col-span-2">
+    <label for="guest-name" class="canva-text mb-2 block text-sm font-semibold" style="color: var(--ink);">
+      Your name
+    </label>
+    <input id="guest-name" name="guest-name"
+           class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[var(--ink)]"
+           type="text" required placeholder="Enter your full name">
+  </div>
+
+  <!-- Attendance -->
+  <div>
+    <label for="attendance" class="canva-text mb-2 block text-sm font-semibold" style="color: var(--ink);">
+      Will you attend?
+    </label>
+    <select id="attendance" name="attendance"
+            class="w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[var(--ink)]" required>
+      <option value="" disabled selected>Please select</option>
+      <option value="Joyfully accepts">Joyfully accepts</option>
+      <option value="Regretfully declines">Regretfully declines</option>
+    </select>
+  </div>
+
+  <!-- Dietary Notes -->
+  <div class="sm:col-span-2">
+    <label for="dietary-notes" class="canva-text mb-2 block text-sm font-semibold" style="color: var(--ink);">
+      Dietary notes
+    </label>
+    <textarea id="dietary-notes" name="dietary-notes"
+              class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[var(--ink)]"
+              rows="3" placeholder="Any dietary requirements"></textarea>
+  </div>
+
+  <!-- Song Request -->
+  <div class="sm:col-span-2">
+    <label for="song-request" class="canva-text mb-2 block text-sm font-semibold" style="color: var(--ink);">
+      Song request
+    </label>
+    <textarea id="song-request" name="song-request"
+              class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[var(--ink)]"
+              rows="3" placeholder="Song you'd love to hear"></textarea>
+  </div>
+
+  <!-- Message -->
+  <div class="sm:col-span-2">
+    <label for="message" class="canva-text mb-2 block text-sm font-semibold" style="color: var(--ink);">
+      A note for the couple
+    </label>
+    <textarea id="message" name="message"
+              class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[var(--ink)]"
+              rows="3" placeholder="Optional message"></textarea>
+  </div>
+
+  <!-- Email -->
+  <div>
+    <label for="email" class="canva-text mb-2 block text-sm font-semibold" style="color: var(--ink);">
+      Your email
+    </label>
+    <input id="email" name="email"
+           class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[var(--ink)]"
+           type="email" placeholder="Optional email">
+  </div>
+
+  <!-- Mobile -->
+  <div>
+    <label for="phone" class="canva-text mb-2 block text-sm font-semibold" style="color: var(--ink);">
+      Your mobile
+    </label>
+    <input id="phone" name="mobile"
+           class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[var(--ink)]"
+           type="text" placeholder="Optional mobile">
+  </div>
+
+  <!-- Submit -->
+ <!-- Submit -->
+  <div class="sm:col-span-2">
+    <button id="rsvp-submit"
+            class="canva-button mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 font-bold transition hover:brightness-95"
+            type="submit" style="background: var(--blush); color: var(--ink);">
+      Send RSVP
+    </button>
+  </div>
 
      </div>
     </div>

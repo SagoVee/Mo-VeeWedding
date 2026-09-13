@@ -21,18 +21,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-  // RSVP Form Handling
+// RSVP Form Handling
 async function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
 
     // Get form values (matching PHP field names)
     const guestName  = document.getElementById('guest-name').value.trim();
     const attendance = document.getElementById('attendance').value.trim();
-    const mobile     = document.getElementById('phone')?.value.trim() || "";
-    const email      = document.getElementById('email')?.value.trim() || "";
-    const message    = document.getElementById('Comments').value.trim();
     const dietary    = document.getElementById('dietary-notes')?.value.trim() || "";
     const song       = document.getElementById('song-request')?.value.trim() || "";
+    const message    = document.getElementById('Comments').value.trim();
+    const email      = document.getElementById('email')?.value.trim() || "";
+    const mobile     = document.getElementById('phone')?.value.trim() || "";
 
     // Basic validation
     if (!guestName || !attendance) {
@@ -44,11 +44,11 @@ async function submitForm(event) {
     const formData = new FormData();
     formData.append("guest-name", guestName);
     formData.append("attendance", attendance);
-    formData.append("mobile", mobile);
-    formData.append("email", email);
-    formData.append("message", message);
     formData.append("dietary-notes", dietary);
     formData.append("song-request", song);
+    formData.append("message", message);
+    formData.append("email", email);
+    formData.append("mobile", mobile);
 
     try {
         const response = await fetch("rsvp.php", {
@@ -70,5 +70,4 @@ async function submitForm(event) {
         document.getElementById("form-error").classList.remove("hidden");
         document.getElementById("form-success").classList.add("hidden");
     }
-  }
-  
+}
