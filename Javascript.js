@@ -21,35 +21,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
-  // RSVP form
- const form = document.getElementById("rsvp-form");
-const submitButton = document.getElementById("rsvp-submit");
-const errorMessage = document.getElementById("form-error");
-const successMessage = document.getElementById("form-success");
-
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  // Hide old messages
   errorMessage.classList.add("hidden");
   successMessage.classList.add("hidden");
-
-  // Disable button while submitting
   submitButton.disabled = true;
 
   try {
+    const formData = new FormData(form);
+
     const response = await fetch("https://formcarry.com/s/PpHcw0PU6qD", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        guest_name: document.getElementById("guest-name").value.trim(),
-        attendance: document.getElementById("attendance").value,
-        dietary_notes: document.getElementById("dietary-notes").value.trim(),
-        song_request: document.getElementById("song-request").value.trim(),
-        message: document.getElementById("message").value.trim(),
-        submitted_at: new Date().toISOString()
-      })
+      body: formData
     });
 
     if (response.ok) {
