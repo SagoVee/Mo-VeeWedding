@@ -8,7 +8,7 @@
   <script src="/_sdk/fbe2ebfd64647c54.data_sdk.js" integrity="sha512-vkTX6CfvpHc3WbjK+tFJCaDuw4ERA4aEV/e5/7+MMJPMTF4RJYCI6CAwJBT/gtDW+dba4uLSsPUgDjVDHWtgUQ=="></script>
   <link rel="stylesheet" href="Styles.css">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
- <script src="javascript.js"></script>
+  <script src="javascript.js"></script>
  
 
 
@@ -29,12 +29,14 @@
          style="color: rgb(86, 109, 87); font-weight: 500; font-size: 16px;">
         M &amp; V
       </a>
-      <button id="playBtn" class="rounded-full px-3 py-1 bg-[#e8bfc0] text-[#4e4a47] text-sm font-semibold hover:brightness-95">
-        ▶
-      </button>
-      <button id="pauseBtn" class="rounded-full px-3 py-1 bg-[#dfd4c7] text-[#4e4a47] text-sm font-semibold hover:brightness-95">
-        ⏸
-      </button>
+    <button id="playBtn" class="rounded-full p-1 bg-[#e8bfc0] text-[#4e4a47] hover:brightness-95">
+    <i data-lucide="play" class="w-4 h-4"></i>
+  </button>
+
+  <!-- Slim Pause Button -->
+  <button id="pauseBtn" class="rounded-full p-1 bg-[#dfd4c7] text-[#4e4a47] hover:brightness-95">
+    <i data-lucide="pause" class="w-4 h-4"></i>
+  </button>
     </div>
 
     <!-- Right side: Menu toggle (mobile) + Nav links (desktop) -->
@@ -62,8 +64,8 @@
 </header>
 
 <!-- Mobile menu (hidden by default) -->
-<div id="mobile-menu"
-     class="hidden flex flex-col gap-6 px-5 py-6 bg-[#fffaf2] transition-all duration-300 ease-in-out">
+<div id="mobile-menu" 
+     class="hidden z-50 flex flex-col gap-6 px-5 py-6 bg-[#fffaf2] transition-all duration-300 ease-in-out">
   <a href="#details" class="canva-link nav-link">Our Story</a>
   <a href="#schedule" class="canva-link nav-link">Schedule</a>
   <a href="#gallery" class="canva-link nav-link">Gallery</a>
@@ -665,3 +667,4 @@ Current account</p>
 
  
 </body></html>
+
