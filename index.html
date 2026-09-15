@@ -10,45 +10,59 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet">
  <script src="javascript.js"></script>
  
-<audio id="bgMusic" autoplay loop></audio>
-<script>
-      // List of songs
-  const songs = [
-    "Mafikizolo_-_Masthokoze_(mp3.pm).mp3",
-    "Cater2U.mp3",
-    "fairytale.mp3",
-  ];
 
-  // Pick a random song
-  const randomSong = songs[Math.floor(Math.random() * songs.length)];
 
-  // Get audio element
-  const music = document.getElementById("bgMusic");
-  music.src = randomSong;
-
-  // Set volume (0.0 to 1.0)
-  music.volume = 0.05;
-
-  // Try to play
-  window.addEventListener("load", () => {
-    music.play().catch(() => {
-      console.log("Autoplay blocked — waiting for user interaction.");
-    });
-  });
-
-</script>
  
   <script src="/_sdk/fcb6dc01f91829ac.resizing_sdk.js" type="text/javascript" integrity="sha512-YK8JfnN705qaEaVhiL7pcVB2Rs/BbdX5yxV55Az8zT/1JanyEWTw9HqCF915m9iV1YEaoil8qsjJz03l1Kb0Ug=="></script>
  </head>
  <body data-template-id="__page-root" class="w-full min-h-screen" style="background: rgb(255, 250, 242);">
-  <header class="sticky top-0 z-40 border-b border-[#dfd4c7] bg-[#fffaf2]/95 backdrop-blur">
-   <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8" aria-label="Main navigation"><a href="#welcome" data-template-id="nav-monogram" class="canva-link display-font text-2xl italic tracking-wide" style="color: rgb(86, 109, 87); font-weight: 500; font-style: normal; font-size: 16px;">M &amp; V</a> <button id="menu-toggle" type="button" class="rounded-full p-2 text-[#566d57] md:hidden" aria-label="Open navigation menu" aria-controls="mobile-menu" aria-expanded="false"> <i data-lucide="menu" width="23" height="23"></i> </button>
-    <div class="hidden items-center gap-7 text-xs font-semibold uppercase tracking-[0.16em] md:flex"><a data-template-id="nav-details" class="canva-link nav-link" href="#details" style="color: rgb(86, 109, 87); font-weight: 400; font-style: normal; font-size: 16px;">Our Story</a> <a data-template-id="nav-schedule" class="canva-link nav-link" href="#schedule" style="color: rgb(86, 109, 87); font-weight: 400; font-style: normal; font-size: 16px;">Schedule</a> <a data-template-id="nav-gallery" class="canva-link nav-link" href="#gallery" style="color: rgb(86, 109, 87); font-weight: 400; font-style: normal; font-size: 16px;">Gallery</a> <a data-template-id="nav-travel" class="canva-link nav-link" href="#travel" style="color: rgb(86, 109, 87); font-weight: 400; font-style: normal; font-size: 16px;">Travel</a> <a data-template-id="nav-rsvp" class="canva-link rounded-full px-5 py-2.5 transition hover:brightness-95" href="#rsvp" style="background: rgb(232, 191, 192); color: rgb(78, 74, 71); font-weight: 700; font-style: normal; font-size: 16px;">RSVP</a>
-    </div>
+
+  <audio id="bgMusic" loop></audio>
+
+<header class="sticky top-0 z-40 border-b border-[#dfd4c7] bg-[#fffaf2]/95 backdrop-blur">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8" aria-label="Main navigation">
     
-   </nav>
+    <!-- Left side: Logo + Music Controls -->
+    <div class="flex items-center gap-4">
+      <a href="#welcome" data-template-id="nav-monogram"
+         class="canva-link display-font text-2xl italic tracking-wide"
+         style="color: rgb(86, 109, 87); font-weight: 500; font-size: 16px;">
+        M &amp; V
+      </a>
+      <button id="playBtn" class="rounded-full px-3 py-1 bg-[#e8bfc0] text-[#4e4a47] text-sm font-semibold hover:brightness-95">
+        ▶
+      </button>
+      <button id="pauseBtn" class="rounded-full px-3 py-1 bg-[#dfd4c7] text-[#4e4a47] text-sm font-semibold hover:brightness-95">
+        ⏸
+      </button>
+    </div>
+
+    <!-- Right side: Menu toggle (mobile) + Nav links (desktop) -->
+    <div class="flex items-center gap-6">
+      <!-- Mobile menu icon -->
+      <button id="menu-toggle" type="button"
+              class="rounded-full p-2 text-[#566d57] md:hidden"
+              aria-label="Open navigation menu" aria-controls="mobile-menu" aria-expanded="false">
+        <i data-lucide="menu" width="23" height="23"></i>
+      </button>
+
+      <!-- Desktop nav links -->
+      <div class="hidden md:flex items-center gap-7 text-xs font-semibold uppercase tracking-[0.16em]">
+        <a href="#details" class="canva-link nav-link" style="color: rgb(86, 109, 87);">Our Story</a>
+        <a href="#schedule" class="canva-link nav-link" style="color: rgb(86, 109, 87);">Schedule</a>
+        <a href="#gallery" class="canva-link nav-link" style="color: rgb(86, 109, 87);">Gallery</a>
+        <a href="#travel" class="canva-link nav-link" style="color: rgb(86, 109, 87);">Travel</a>
+        <a href="#rsvp" class="canva-link rounded-full px-5 py-2.5 transition hover:brightness-95"
+           style="background: rgb(232, 191, 192); color: rgb(78, 74, 71); font-weight: 700;">
+          RSVP
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
 <!-- Mobile menu (hidden by default) -->
-<div id="mobile-menu" 
+<div id="mobile-menu"
      class="hidden flex flex-col gap-6 px-5 py-6 bg-[#fffaf2] transition-all duration-300 ease-in-out">
   <a href="#details" class="canva-link nav-link">Our Story</a>
   <a href="#schedule" class="canva-link nav-link">Schedule</a>
@@ -56,6 +70,59 @@
   <a href="#travel" class="canva-link nav-link">Travel</a>
   <a href="#rsvp" class="canva-link rounded-full px-5 py-2.5 bg-[#e8bfc0] text-[#4e4a47] font-bold">RSVP</a>
 </div>
+
+<script>
+  // 🎶 Song list
+  const songs = [
+    "Mafikizolo_-_Masthokoze_(mp3.pm).mp3",
+    "Cater2U.mp3",
+    "fairytale.mp3",
+  ];
+
+  // Pick random song
+  const randomSong = songs[Math.floor(Math.random() * songs.length)];
+
+  // Audio element
+  const music = document.getElementById("bgMusic");
+  music.src = randomSong;
+  music.volume = 0; // start silent for fade-in
+
+  // Buttons
+  const playBtn = document.getElementById("playBtn");
+  const pauseBtn = document.getElementById("pauseBtn");
+
+  // Fade-in function
+  function fadeIn(audio, targetVolume, duration) {
+    let step = targetVolume / (duration / 100);
+    audio.volume = 0;
+    let fadeInterval = setInterval(() => {
+      if (audio.volume < targetVolume) {
+        audio.volume = Math.min(audio.volume + step, targetVolume);
+      } else {
+        clearInterval(fadeInterval);
+      }
+    }, 100);
+  }
+
+  playBtn.addEventListener("click", () => {
+    music.play().then(() => {
+      fadeIn(music, 0.05, 2000); // fade to 0.05 over 2 seconds
+    }).catch(err => {
+      console.log("Playback blocked:", err);
+    });
+  });
+
+  pauseBtn.addEventListener("click", () => {
+    music.pause();
+  });
+
+  // Optional: try autoplay on load (may be blocked by browser)
+  window.addEventListener("load", () => {
+    music.play().catch(() => {
+      console.log("Autoplay blocked — waiting for user interaction.");
+    });
+  });
+</script>
 
 <!-- Load Lucide icons at the end of body -->
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
