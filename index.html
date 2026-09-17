@@ -29,13 +29,18 @@
          style="color: rgb(86, 109, 87); font-weight: 500; font-size: 16px;">
         M &amp; V
       </a>
-    <button id="playBtn" class="rounded-full p-1 bg-[#e8bfc0] text-[#4e4a47] hover:brightness-95">
+  <!-- Play button -->
+  <button id="playBtn" 
+          class="flex items-center gap-2 rounded-full px-3 py-1 bg-[#e8bfc0] text-[#4e4a47] font-medium hover:brightness-95 transition">
     <i data-lucide="play" class="w-4 h-4"></i>
+    <span class="text-sm">Play Sound</span>
   </button>
 
-  <!-- Slim Pause Button -->
-  <button id="pauseBtn" class="rounded-full p-1 bg-[#dfd4c7] text-[#4e4a47] hover:brightness-95">
+  <!-- Pause button -->
+  <button id="pauseBtn" 
+          class="flex items-center gap-2 rounded-full px-3 py-1 bg-[#dfd4c7] text-[#4e4a47] font-medium hover:brightness-95 transition">
     <i data-lucide="pause" class="w-4 h-4"></i>
+   
   </button>
     </div>
 
@@ -51,7 +56,7 @@
       <!-- Desktop nav links -->
       <div class="hidden md:flex items-center gap-7 text-xs font-semibold uppercase tracking-[0.16em]">
         <a href="#details" class="canva-link nav-link" style="color: rgb(86, 109, 87);">Our Story</a>
-        <a href="#schedule" class="canva-link nav-link" style="color: rgb(86, 109, 87);">Schedule</a>
+        <a href="#schedule" class="canva-link nav-link" style="color: rgb(86, 109, 87);">Details</a>
         <a href="#gallery" class="canva-link nav-link" style="color: rgb(86, 109, 87);">Gallery</a>
         <a href="#travel" class="canva-link nav-link" style="color: rgb(86, 109, 87);">Travel</a>
         <a href="#rsvp" class="canva-link rounded-full px-5 py-2.5 transition hover:brightness-95"
@@ -137,7 +142,7 @@
 
   </header>
   <main>
-   <section id="welcome" data-template-id="hero-section" class="canva-banner relative flex min-h-[650px] items-center overflow-hidden" style="background: rgb(247, 247, 247);"><img data-template-id="hero-image" loading="lazy" class="canva-image absolute inset-0 h-full w-full object-cover" src="Images\Ring Picture.jpg?auto=compress&amp;cs=tinysrgb&amp;w=" alt="A young couple enjoying a romantic beach wedding during a vibrant sunset.">
+   <section id="welcome" data-template-id="hero-section" class="canva-banner relative flex min-h-[650px] items-center overflow-hidden" style="background: rgb(247, 247, 247);"><img data-template-id="hero-image" loading="lazy" class="canva-image absolute inset-0 h-full w-full object-cover" src="Images\Ring Picture.webp?auto=compress&amp;cs=tinysrgb&amp;w=" alt="A young couple enjoying a romantic beach wedding during a vibrant sunset.">
     <div class="hero-overlay absolute inset-0"></div>
     <div class="relative mx-auto w-full max-w-7xl px-6 py-24 lg:px-16">
      <div class="max-w-3xl text-white">
@@ -158,7 +163,7 @@
   <div class="mx-auto max-w-6xl grid gap-40 md:grid-cols-2 items-center">
     <!-- Left: Photo -->
     <div class="rounded-[1.7rem] overflow-hidden shadow-sm">
-      <img src="Images\DSC00324.jpg" alt="Couple embracing outdoors" class="w-full h-auto object-cover">
+      <img src="Images\DSC00324.webp" alt="Couple embracing outdoors" class="w-full h-auto object-cover">
     </div>
 
     <!-- Right: Story -->
@@ -218,7 +223,7 @@ Now, five years later, we’re ready to say “I do” in November 2026.  </p>
 <div class="rounded-[1.7rem] overflow-hidden" 
      style="border: 1px solid rgba(78,74,71,0.3);
             box-shadow: 0 6px 18px rgb(0, 0, 0);">
-  <img src="Images\DSC00703.jpg" 
+  <img src="Images\DSC00703.webp" 
        alt="Bride and groom walking outdoors" 
        class="w-full h-auto object-cover">
 </div>
@@ -236,7 +241,7 @@ Now, five years later, we’re ready to say “I do” in November 2026.  </p>
 <div style="
   position: absolute;
   inset: 0;
-  background: url('Images/Flowers.jpeg') center center / cover no-repeat;
+  background: url('Images/Flowers.webp') center center / cover no-repeat;
   opacity: 0.2;   /* transparency only on the image */
   z-index: 0;
   border-radius: 0 0 1.7rem 1.7rem;
@@ -307,7 +312,7 @@ Now, five years later, we’re ready to say “I do” in November 2026.  </p>
           <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
         <img data-template-id="gallery-image-three" loading="lazy" 
              class="canva-image h-80 w-full object-cover" 
-             src="Images/DSC00650.jpg" 
+             src="Images/DSC00650.webp" 
              alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
       </figure>
         
@@ -315,27 +320,27 @@ Now, five years later, we’re ready to say “I do” in November 2026.  </p>
           <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
         <img data-template-id="gallery-image-three" loading="lazy" 
              class="canva-image h-80 w-full object-cover" 
-             src="Images/DSC00339.jpg" 
+             src="Images/DSC00339.webp" 
              alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
       </figure>
             <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
         <img data-template-id="gallery-image-three" loading="lazy" 
              class="canva-image h-80 w-full object-cover" 
-             src="Images/DSC00642.jpg" 
+             src="Images/DSC00642.webp" 
              alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
       </figure>
          
           <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
         <img data-template-id="gallery-image-three" loading="lazy" 
              class="canva-image h-80 w-full object-cover" 
-             src="Images/DSC00396.jpg" 
+             src="Images/DSC00396.webp" 
              alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
       </figure>
 
             <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
         <img data-template-id="gallery-image-three" loading="lazy" 
              class="canva-image h-80 w-full object-cover" 
-             src="Images/DSC00314.jpg" 
+             src="Images/DSC00314.webp" 
              alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
       </figure>
 
@@ -344,14 +349,14 @@ Now, five years later, we’re ready to say “I do” in November 2026.  </p>
       <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
         <img data-template-id="gallery-image-two" loading="lazy" 
              class="canva-image h-80 w-full object-cover" 
-             src="Images/DSC00281.jpg" 
+             src="Images/DSC00281.webp" 
              alt="Elegant bridal bouquet held by a bride in an outdoor setting, showcasing pastel florals.">
       </figure>
 
              <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
         <img data-template-id="gallery-image-three" loading="lazy" 
              class="canva-image h-80 w-full object-cover" 
-             src="Images/DSC00490.jpg" 
+             src="Images/DSC00490.webp" 
              alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
       </figure>
 
@@ -359,7 +364,7 @@ Now, five years later, we’re ready to say “I do” in November 2026.  </p>
       <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
         <img data-template-id="gallery-image-three" loading="lazy" 
              class="canva-image h-80 w-full object-cover" 
-             src="Images/DSC00658.jpg" 
+             src="Images/DSC00658.webp" 
              alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
       </figure>
       
@@ -367,7 +372,7 @@ Now, five years later, we’re ready to say “I do” in November 2026.  </p>
           <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
         <img data-template-id="gallery-image-three" loading="lazy" 
              class="canva-image h-80 w-full object-cover" 
-             src="Images/DSC00326.jpg" 
+             src="Images/DSC00326.webp" 
              alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
       </figure>
     
@@ -375,21 +380,21 @@ Now, five years later, we’re ready to say “I do” in November 2026.  </p>
           <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
         <img data-template-id="gallery-image-three" loading="lazy" 
              class="canva-image h-80 w-full object-cover" 
-             src="Images/DSC00428.jpg" 
+             src="Images/DSC00428.webp" 
              alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
       </figure>
 
       <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
         <img data-template-id="gallery-image-three" loading="lazy" 
              class="canva-image h-80 w-full object-cover" 
-             src="Images/DSC00334.jpg" 
+             src="Images/DSC00334.webp" 
              alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
       </figure>
 
       <figure class="gallery-tile flex-shrink-0 w-64 overflow-hidden rounded-[1.5rem]">
         <img data-template-id="gallery-image-three" loading="lazy" 
              class="canva-image h-80 w-full object-cover" 
-             src="Images/DSC00460.jpg" 
+             src="Images/DSC00460.webp" 
              alt="Beautiful outdoor wedding ceremony setting with white and pastel-colored decor and floral arrangements.">
       </figure>
     </div>
@@ -411,7 +416,7 @@ Now, five years later, we’re ready to say “I do” in November 2026.  </p>
        <p data-template-id="s7-address" class="canva-text sans mt-5" style="font-size: 16px; color: rgb(64, 54, 46); font-weight: 400; font-style: normal;">308 Boundary Rd, North Riding AH Randburg 2169</p><a data-template-id="s7-map-button" class="canva-button solid-btn mt-8" href="https://www.google.com/maps/place/The+Garden+Venue+Hotel/@-26.071818,27.924994,17z/data=!3m1!4b1!4m9!3m8!1s0x1e959e1fff26b771:0x9142c85847e89b79!5m2!4m1!1i2!8m2!3d-26.071818!4d27.924994!16s%2Fg%2F11b6_98xp5?entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="background: rgb(104, 113, 93); color: rgb(255, 253, 248); font-weight: 500; font-style: normal; font-size: 16px;">VIEW LOCATION</a>
       </div>
       <div id="travel" class="venue-card max-w-none flex flex-col justify-center text-center">
-       <img data-template-id="s11-travel-image" loading="lazy" class="canva-image travel-image h-48 mb-8" src="Images\Venue1.jpeg" alt="Garden venue with a building, bridge, pond, and lush greenery.">
+       <img data-template-id="s11-travel-image" loading="lazy" class="canva-image travel-image h-48 mb-8" src="Images\Venue1.webp" alt="Garden venue with a building, bridge, pond, and lush greenery.">
        <h2 data-template-id="s11-heading" class="canva-text mid-title" style="color: rgb(64, 54, 46); font-weight: 500; font-style: normal; font-size: 24px;">A Place to Rest &amp; Celebrate</h2>
        <p data-template-id="s11-stay-copy" class="canva-text letter-copy mt-8" style="margin-left: 0px; color: rgb(64, 54, 46); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.6;">
         The Garden Venue hotel <br>
