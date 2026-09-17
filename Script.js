@@ -26,42 +26,20 @@ document.addEventListener("DOMContentLoaded", () => {
 const form = document.getElementById("rsvp-form");
 const submitButton = document.getElementById("rsvp-submit");
 const errorMessage = document.getElementById("form-error");
-const successMessage = document.getElementById("form-success");
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+if (form) {
+  form.addEventListener("submit", () => {
+    // Hide previous error
+    errorMessage.classList.add("hidden");
 
-  errorMessage.classList.add("hidden");
-  successMessage.classList.add("hidden");
-  submitButton.disabled = true;
+    // Prevent multiple clicks
+    submitButton.disabled = true;
 
-  try {
-    const data = new FormData(form);
+    // Change button text while submitting
+    const buttonText = submitButton.querySelector("span");
 
-    const res = await fetch("https://splitforms.com/api/submit", {
-      method: "POST",
-      body: data,
-      headers: { Accept: "application/json" },
-    });
-
-    const json = await res.json();
-    if (json.success) {
-      // Reset form
-      form.reset();
-
-      // Show inline success briefly (optional)
-      successMessage.classList.remove("hidden");
-
-      // Force redirect to your thank-you page
-      window.location.href = "https://sagovee.github.io/Mo-VeeWedding/Thank-you.html";
-    } else {
-      errorMessage.textContent = "Error: " + (json.message || "Try again");
-      errorMessage.classList.remove("hidden");
+    if (buttonText) {
+      buttonText.textContent = "Sending RSVP...";
     }
-  } catch (err) {
-    errorMessage.textContent = "Network error. Please try again.";
-    errorMessage.classList.remove("hidden");
-  }
-
-  submitButton.disabled = false;
-});
+  });
+}

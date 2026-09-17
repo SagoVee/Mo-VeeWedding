@@ -290,7 +290,7 @@ Now, five years later, we’re ready to say “I do” in November 2026.  </p>
 <div style="
   position: absolute;
   inset: 0;
-  background: url('Images\Flowers.jpeg') center center / cover no-repeat;
+  background: url('Images/Flowers.jpeg') center center / cover no-repeat;
   opacity: 0.2;   /* transparency only on the image */
   z-index: 0;
   border-radius: 0 0 1.7rem 1.7rem;
@@ -582,24 +582,46 @@ Current account</p>
      </aside>
      <div data-template-id="rsvp-form-panel" class="canva-panel p-8 lg:p-12" style="background: rgb(255, 250, 242);">
 
-<form id="rsvp-form" action="https://splitforms.com/api/submit" method="POST">
-  <input type="hidden" name="access_key" value="c48273f0b54447aeaf7e2761ecd812c2">
-  
+<form id="rsvp-form"
+      action="https://formsubmit.co/sagovee@outlook.com"
+      method="POST">
+
+  <!-- FormSubmit settings -->
+  <input type="hidden" name="_subject" value="New Wedding RSVP">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_next" value="https://sagovee.github.io/Mo-VeeWedding/Thank-you.html">
 
   <div class="grid gap-5 sm:grid-cols-2">
+
     <!-- Name -->
     <div class="sm:col-span-2">
-      <label for="guest-name" class="canva-text mb-2 block text-sm font-semibold" style="color:#4e4a47;font-size:16px;">Your name</label>
-      <input id="guest-name" name="guest_name"
+      <label for="guest-name"
+             class="canva-text mb-2 block text-sm font-semibold"
+             style="color:#4e4a47;font-size:16px;">
+        Your name
+      </label>
+
+      <input id="guest-name"
+             name="guest_name"
              class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[#4e4a47]"
-             type="text" required placeholder="Enter your full name">
+             type="text"
+             required
+             placeholder="Enter your full name">
     </div>
 
     <!-- Attendance -->
     <div>
-      <label for="attendance" class="canva-text mb-2 block text-sm font-semibold" style="color:#4e4a47;font-size:16px;">Will you attend?</label>
-      <select id="attendance" name="attendance"
-              class="w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[#4e4a47]" required>
+      <label for="attendance"
+             class="canva-text mb-2 block text-sm font-semibold"
+             style="color:#4e4a47;font-size:16px;">
+        Will you attend?
+      </label>
+
+      <select id="attendance"
+              name="attendance"
+              class="w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[#4e4a47]"
+              required>
+
         <option value="" disabled selected>Please select</option>
         <option value="Joyfully accepts">Joyfully accepts</option>
         <option value="Regretfully declines">Regretfully declines</option>
@@ -608,41 +630,77 @@ Current account</p>
 
     <!-- Dietary Notes -->
     <div class="sm:col-span-2">
-      <label for="dietary-notes" class="canva-text mb-2 block text-sm font-semibold" style="color:#4e4a47;font-size:16px;">Dietary notes</label>
-      <textarea id="dietary-notes" name="dietary_notes"
+      <label for="dietary-notes"
+             class="canva-text mb-2 block text-sm font-semibold"
+             style="color:#4e4a47;font-size:16px;">
+        Dietary notes
+      </label>
+
+      <textarea id="dietary-notes"
+                name="dietary_notes"
                 class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[#4e4a47]"
-                rows="3" placeholder="Please let us know of any dietary requirements"></textarea>
+                rows="3"
+                placeholder="Please let us know of any dietary requirements"></textarea>
     </div>
 
     <!-- Song Request -->
     <div class="sm:col-span-2">
-      <label for="song-request" class="canva-text mb-2 block text-sm font-semibold" style="color:#4e4a47;font-size:16px;">Song Request</label>
-      <textarea id="song-request" name="song_request"
+      <label for="song-request"
+             class="canva-text mb-2 block text-sm font-semibold"
+             style="color:#4e4a47;font-size:16px;">
+        Song Request
+      </label>
+
+      <textarea id="song-request"
+                name="song_request"
                 class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[#4e4a47]"
-                rows="3" placeholder="Share a song you would love to hear at the wedding."></textarea>
+                rows="3"
+                placeholder="Share a song you would love to hear at the wedding."></textarea>
     </div>
 
     <!-- Message -->
     <div class="sm:col-span-2">
-      <label for="message" class="canva-text mb-2 block text-sm font-semibold" style="color:#4e4a47;font-size:16px;">A note for the couple</label>
-      <textarea id="message" name="message"
+      <label for="message"
+             class="canva-text mb-2 block text-sm font-semibold"
+             style="color:#4e4a47;font-size:16px;">
+        A note for the couple
+      </label>
+
+      <textarea id="message"
+                name="message"
                 class="canva-input w-full rounded-xl border border-[#d8cbc0] bg-white px-4 py-3.5 text-[#4e4a47]"
-                rows="3" placeholder="Optional message"></textarea>
+                rows="3"
+                placeholder="Optional message"></textarea>
     </div>
+
   </div>
 
   <!-- Error & Success -->
-  <p id="form-error" class="mt-4 hidden text-sm font-semibold text-[#a7464f]" role="alert"></p>
-  <p id="form-success" class="canva-text mt-4 hidden rounded-xl px-4 py-3 text-sm font-semibold"
-     role="status" style="background:#e8eee5;color:#395b40;">Thank you — your RSVP has been received with love.</p>
+  <p id="form-error"
+     class="mt-4 hidden text-sm font-semibold text-[#a7464f]"
+     role="alert"></p>
+
+  <p id="form-success"
+     class="canva-text mt-4 hidden rounded-xl px-4 py-3 text-sm font-semibold"
+     role="status"
+     style="background:#e8eee5;color:#395b40;">
+    Thank you — your RSVP has been received with love.
+  </p>
 
   <!-- Submit -->
   <button id="rsvp-submit"
           class="canva-button mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 font-bold transition hover:brightness-95"
-          type="submit" style="background:#e8bfc0;color:#4e4a47;">
-    <span class="canva-text" style="color:#4e4a47;font-weight:700;font-size:16px;">Send RSVP</span>
+          type="submit"
+          style="background:#e8bfc0;color:#4e4a47;">
+
+    <span class="canva-text"
+          style="color:#4e4a47;font-weight:700;font-size:16px;">
+      Send RSVP
+    </span>
+
     <i data-lucide="send" width="17" height="17"></i>
   </button>
+
 </form>
 
      </div>
