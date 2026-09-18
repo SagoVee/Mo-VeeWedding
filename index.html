@@ -31,17 +31,22 @@
       </a>
   <!-- Play button -->
   <button id="playBtn" 
-          class="flex items-center gap-2 rounded-full px-3 py-1 bg-[#e8bfc0] text-[#4e4a47] font-medium hover:brightness-95 transition">
-    <i data-lucide="play" class="w-4 h-4"></i>
-    <span class="text-sm">Play Sound</span>
+        class="flex items-center gap-2 rounded-full px-2 py-1 bg-[#e8bfc0] text-[#4e4a47] font-medium hover:brightness-95 transition">    
+        <i data-lucide="play" class="w-4 h-4"></i>
+    <span class="text-sm">Play</span>
   </button>
 
   <!-- Pause button -->
   <button id="pauseBtn" 
-          class="flex items-center gap-2 rounded-full px-3 py-1 bg-[#dfd4c7] text-[#4e4a47] font-medium hover:brightness-95 transition">
-    <i data-lucide="pause" class="w-4 h-4"></i>
+        class="flex items-center gap-2 rounded-full px-2 py-1 bg-[#dfd4c7] text-[#4e4a47] font-medium hover:brightness-95 transition">    
+        <i data-lucide="pause" class="w-4 h-4"></i>
    
   </button>
+  <button id="changeSongBtn" 
+        class="flex items-center gap-2 rounded-full px-2 py-1 bg-[#dfd4c7] text-[#4e4a47] font-medium hover:brightness-95 transition">  
+        <i data-lucide="skip-forward" class="w-4 h-4"></i>
+ 
+</button>
     </div>
 
     <!-- Right side: Menu toggle (mobile) + Nav links (desktop) -->
@@ -114,6 +119,23 @@
       }
     }, 100);
   }
+
+  const changeSongBtn = document.getElementById("changeSongBtn");
+
+changeSongBtn.addEventListener("click", () => {
+  // Pick a different random song
+  let newSong;
+  do {
+    newSong = songs[Math.floor(Math.random() * songs.length)];
+  } while (newSong === music.src.split("/").pop()); // avoid repeating same track
+
+  music.src = newSong;
+  music.play().then(() => {
+    fadeIn(music, 0.05, 2000); // fade in again
+  }).catch(err => {
+    console.log("Playback blocked:", err);
+  });
+});
 
   playBtn.addEventListener("click", () => {
     music.play().then(() => {
