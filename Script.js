@@ -20,26 +20,27 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
+  // RSVP form setup
+  const form = document.getElementById("rsvp-form");
+  const submitButton = document.getElementById("rsvp-submit");
+  const errorMessage = document.getElementById("form-error");
+
+  if (form && submitButton) {
+    form.addEventListener("submit", (e) => {
+      // Disable immediately
+      submitButton.disabled = true;
+
+      const buttonText = submitButton.querySelector("span");
+      if (buttonText) {
+        buttonText.textContent = "Sending RSVP...";
+      }
+
+      // Hide previous error
+      errorMessage.classList.add("hidden");
+
+      // Let the browser/FormSubmit handle the actual POST
+      // No need for await here — just allow normal submission
+    });
+  }
 });
-
-// RSVP form setup
-const form = document.getElementById("rsvp-form");
-const submitButton = document.getElementById("rsvp-submit");
-const errorMessage = document.getElementById("form-error");
-
-if (form) {
-  form.addEventListener("submit", () => {
-    // Hide previous error
-    errorMessage.classList.add("hidden");
-
-    // Prevent multiple clicks
-    submitButton.disabled = true;
-
-    // Change button text while submitting
-    const buttonText = submitButton.querySelector("span");
-
-    if (buttonText) {
-      buttonText.textContent = "Sending RSVP...";
-    }
-  });
-}
